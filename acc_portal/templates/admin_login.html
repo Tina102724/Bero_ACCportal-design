@@ -1,0 +1,17 @@
+{% extends "base_auth.html" %}
+{% block title %}Admin Login - ACC Portal{% endblock %}
+{% block side_quote %}"Every application, reviewed in one dashboard."{% endblock %}
+{% block side_sub %}Staff access only.{% endblock %}
+{% block auth_content %}
+<h2>Admin Login</h2>
+<p class="subtitle">Sign in to review scholarship applications.</p>
+<form method="POST">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required autofocus>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit" class="btn btn-amber">Login</button>
+</form>
+{% endblock %}

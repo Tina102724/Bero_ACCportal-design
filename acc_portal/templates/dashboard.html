@@ -1,0 +1,39 @@
+{% extends "base_app.html" %}
+{% block title %}Dashboard - ACC Portal{% endblock %}
+{% block app_content %}
+<h2>Welcome, {{ student.full_name }}</h2>
+
+<div class="profile-card">
+    <p><strong>Student Number:</strong> {{ student.student_number }}</p>
+    <p><strong>Email:</strong> {{ student.email }}</p>
+    <p><strong>Date Registered:</strong> {{ student.date_registered.strftime('%B %d, %Y') }}</p>
+</div>
+
+<h3>Your Scholarship Applications</h3>
+<a class="btn" href="{{ url_for('apply_scholarship') }}">+ New Application</a>
+
+{% if applications %}
+<table class="app-table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>GWA</th>
+            <th>Status</th>
+            <th>Date Applied</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.scholarship_type }}</td>
+            <td>{{ app.gwa or '—' }}</td>
+            <td><span class="status status-{{ app.status|lower }}">{{ app.status }}</span></td>
+            <td>{{ app.date_applied.strftime('%b %d, %Y') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>You have not applied for any scholarships yet.</p>
+{% endif %}
+{% endblock %}

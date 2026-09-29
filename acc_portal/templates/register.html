@@ -1,0 +1,30 @@
+{% extends "base_auth.html" %}
+{% block title %}Register - ACC Portal{% endblock %}
+{% block side_quote %}"Sign up once — everything after this is one click away."{% endblock %}
+{% block side_sub %}You'll need a valid ID (PNG, JPG, or PDF) on hand.{% endblock %}
+{% block auth_content %}
+<h2>Create your account</h2>
+<p class="subtitle">Register as a student to get started.</p>
+<form method="POST" enctype="multipart/form-data">
+    <label for="student_number">Student Number</label>
+    <input type="text" id="student_number" name="student_number" required>
+
+    <label for="full_name">Full Name</label>
+    <input type="text" id="full_name" name="full_name" required>
+
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" minlength="8" required>
+
+    <label for="confirm_password">Confirm Password</label>
+    <input type="password" id="confirm_password" name="confirm_password" minlength="8" required>
+
+    <label for="valid_id">Valid ID (PNG, JPG, or PDF — max 5MB)</label>
+    <input type="file" id="valid_id" name="valid_id" accept=".png,.jpg,.jpeg,.pdf" required>
+
+    <button type="submit" class="btn">Create Account</button>
+</form>
+<p>Already have an account? <a href="{{ url_for('login') }}">Log in here</a>.</p>
+{% endblock %}

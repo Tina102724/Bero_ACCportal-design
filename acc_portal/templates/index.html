@@ -1,0 +1,64 @@
+{% extends "base_public.html" %}
+{% block title %}ACC Portal - Home{% endblock %}
+{% block body %}
+<div class="topbar">
+    <a href="{{ url_for('index') }}" class="brand">
+        <img src="{{ url_for('static', filename='images/acc_logo.jpg') }}" alt="ACC Logo" class="brand-logo">
+        ACC Portal
+    </a>
+    <div class="topbar-links">
+        {% if student %}
+            <a href="{{ url_for('dashboard') }}" class="cta">Go to Dashboard</a>
+        {% elif session.is_admin %}
+            <a href="{{ url_for('admin_dashboard') }}" class="cta">Admin Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}" class="cta">Register</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="public-wrap">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div style="max-width:520px; margin: 24px auto 0;">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</div>
+
+<div class="hero">
+    <span class="eyebrow">Student Services</span>
+    <h1>Everything your student<br>account needs, in one place</h1>
+    <p>Register as a student, log in securely, and apply for scholarships — all handled through a single portal.</p>
+    <div class="btn-row">
+        <a class="btn" href="{{ url_for('register') }}">Get Started</a>
+        <a class="btn btn-outline" href="{{ url_for('login') }}">I already have an account</a>
+    </div>
+</div>
+
+<div class="feature-grid">
+    <div class="feature-card">
+        <div class="icon-box">01</div>
+        <h3>Register in minutes</h3>
+        <p>Sign up with your student number and a valid ID — no paperwork, no lines.</p>
+    </div>
+    <div class="feature-card">
+        <div class="icon-box">02</div>
+        <h3>One secure login</h3>
+        <p>Access your profile and application history with a single set of credentials.</p>
+    </div>
+    <div class="feature-card">
+        <div class="icon-box">03</div>
+        <h3>Apply for scholarships</h3>
+        <p>Submit your application and track its status — pending, approved, or rejected.</p>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; {{ 2026 }} ACC Portal System</p>
+</footer>
+{% endblock %}

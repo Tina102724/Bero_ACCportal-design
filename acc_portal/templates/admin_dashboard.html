@@ -1,0 +1,63 @@
+{% extends "base_app.html" %}
+{% block title %}Admin Dashboard - ACC Portal{% endblock %}
+{% block app_content %}
+<h2>Scholarship Applications</h2>
+<p style="color:#63636f; margin-top:0;">Review submissions and approve or reject each one.</p>
+
+<div class="stat-row">
+    <a href="{{ url_for('admin_dashboard') }}" class="stat-card {{ 'active' if not status_filter }}">
+        <span class="stat-number">{{ counts.total }}</span>
+        <span class="stat-label">Total</span>
+    </a>
+    <a href="{{ url_for('admin_dashboard', status='Pending') }}" class="stat-card {{ 'active' if status_filter == 'Pending' }}">
+        <span class="stat-number">{{ counts.pending }}</span>
+        <span class="stat-label">Pending</span>
+    </a>
+    <a href="{{ url_for('admin_dashboard', status='Approved') }}" class="stat-card {{ 'active' if status_filter == 'Approved' }}">
+        <span class="stat-number">{{ counts.approved }}</span>
+        <span class="stat-label">Approved</span>
+    </a>
+    <a href="{{ url_for('admin_dashboard', status='Rejected') }}" class="stat-card {{ 'active' if status_filter == 'Rejected' }}">
+        <span class="stat-number">{{ counts.rejected }}</span>
+        <span class="stat-label">Rejected</span>
+    </a>
+</div>
+
+{% if applications %}
+<table class="app-table">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Student No.</th>
+            <th>Type</th>
+            <th>GWA</th>
+            <th>Valid ID</th>
+            <th>Status</th>
+            <th>Date Applied</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.student.full_name }}</td>
+            <td>{{ app.student.student_number }}</td>
+            <td>{{ app.scholarship_type }}</td>
+            <td>{{ app.gwa or '—' }}</td>
+            <td><a href="{{ url_for('uploaded_file', filename=app.student.valid_id_filename) }}" target="_blank">View</a></td>
+            <td><span class="status status-{{ app.status|lower }}">{{ app.status }}</span></td>
+            <td>{{ app.date_applied.strftime('%b %d, %Y') }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('admin_update_application', application_id=app.id) }}" class="inline-actions">
+                    <button type="submit" name="status" value="Approved" class="btn-mini btn-approve">Approve</button>
+                    <button type="submit" name="status" value="Rejected" class="btn-mini btn-reject">Reject</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No applications found{{ ' for this filter' if status_filter else '' }}.</p>
+{% endif %}
+{% endblock %}

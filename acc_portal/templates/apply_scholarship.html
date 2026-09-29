@@ -1,0 +1,26 @@
+{% extends "base_app.html" %}
+{% block title %}Apply for Scholarship - ACC Portal{% endblock %}
+{% block app_content %}
+<div class="form-card">
+    <h2>Scholarship Application</h2>
+    <p>Applying as <strong>{{ student.full_name }}</strong> ({{ student.student_number }})</p>
+    <form method="POST">
+        <label for="scholarship_type">Scholarship Type</label>
+        <select id="scholarship_type" name="scholarship_type" required>
+            <option value="">-- Select --</option>
+            <option value="Academic Excellence">Academic Excellence</option>
+            <option value="Financial Assistance">Financial Assistance</option>
+            <option value="Sports Scholarship">Sports Scholarship</option>
+            <option value="Government Grant">Government Grant</option>
+        </select>
+
+        <label for="gwa">GWA (General Weighted Average)</label>
+        <input type="text" id="gwa" name="gwa" placeholder="e.g. 1.50">
+
+        <label for="reason">Reason / Statement of Need</label>
+        <textarea id="reason" name="reason" rows="5" required></textarea>
+
+        <button type="submit" class="btn">Submit Application</button>
+    </form>
+</div>
+{% endblock %}

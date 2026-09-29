@@ -1,0 +1,28 @@
+{% extends "base_public.html" %}
+{% block body %}
+<div class="auth-shell">
+    <div class="auth-side">
+        <a href="{{ url_for('index') }}" class="brand">
+            <img src="{{ url_for('static', filename='images/acc_logo.jpg') }}" alt="ACC Logo" class="brand-logo">
+            ACC Portal
+        </a>
+        <div class="quote">
+            {% block side_quote %}"A good system doesn't just store your records — it moves your application forward."{% endblock %}
+            <div class="quote-sub">{% block side_sub %}Register once, apply anytime, track everything.{% endblock %}</div>
+        </div>
+        <div class="foot-note">&copy; {{ 2026 }} ACC Portal System</div>
+    </div>
+    <div class="auth-main">
+        <div class="auth-card">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% block auth_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
